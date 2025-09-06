@@ -11,6 +11,7 @@
 <script>
 import DynamicForm from '@/components/form/DynamicForm.vue';
 import axios from 'axios';
+
 export default {
   name: 'ApostaPage',
   components: {
@@ -20,25 +21,13 @@ export default {
     return {
       fields: [
         {
-          id: "apostadorId", label: "Apostador", type: "select", value: "", options: [
-            { value: "A", text: "Categoria A" },
-            { value: "B", text: "Categoria B" },
-            { value: "C", text: "Categoria C" }
-          ]
+          id: "apostadorId", label: "Apostador", type: "select", value: "", options: []
         },
         {
-          id: "cavaloId", label: "Cavalo", type: "select", value: "", options: [
-            { value: "C1", text: "Cavalo 1" },
-            { value: "C2", text: "Cavalo 2" },
-            { value: "C3", text: "Cavalo 3" }
-          ]
+          id: "cavaloId", label: "Cavalo", type: "select", value: "", options: []
         },
         {
-          id: "campeonatoId", label: "Campeonato", type: "select", value: "", options: [
-            { value: "C1", text: "Campeonato 1" },
-            { value: "C2", text: "Campeonato 2" },
-            { value: "C3", text: "Campeonato 3" }
-          ]
+          id: "campeonatoId", label: "Campeonato", type: "select", value: "", options: []
         },
         {
           id: "valorTotal", label: "Valor Total", type: "number", value: ""
@@ -58,22 +47,20 @@ export default {
   methods: {
     async loadOptions() {
       try {
-        const apostadoresResponse = await fetch("https://corrida-hasv.onrender.com/api/Apostador");
-        const apostadoresData = await apostadoresResponse.json();
+
+        const { data: apostadoresData } = await axios.get("https://corrida-hasv.onrender.com/api/Apostador");
         this.fields.find(f => f.id === "apostadorId").options = apostadoresData.map(a => ({
           value: a.id,
           text: a.nome
         }));
 
-        const cavalosResponse = await fetch("https://corrida-hasv.onrender.com/api/Cavalo");
-        const cavalosData = await cavalosResponse.json();
+        const { data: cavalosData } = await axios.get("https://corrida-hasv.onrender.com/api/Cavalo");
         this.fields.find(f => f.id === "cavaloId").options = cavalosData.map(c => ({
           value: c.id,
           text: c.nome
         }));
 
-        const campeonatosResponse = await fetch("https://corrida-hasv.onrender.com/Campeonato");
-        const campeonatosData = await campeonatosResponse.json();
+        const { data: campeonatosData } = await axios.get("https://corrida-hasv.onrender.com/Campeonato");
         this.fields.find(f => f.id === "campeonatoId").options = campeonatosData.map(c => ({
           value: c.id,
           text: c.nome
