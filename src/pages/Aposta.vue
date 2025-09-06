@@ -58,21 +58,21 @@ export default {
   methods: {
     async loadOptions() {
       try {
-        const apostadoresResponse = await fetch("https://localhost:7052/api/Apostador");
+        const apostadoresResponse = await fetch("https://corrida-hasv.onrender.com/api/Apostador");
         const apostadoresData = await apostadoresResponse.json();
         this.fields.find(f => f.id === "apostadorId").options = apostadoresData.map(a => ({
           value: a.id,
           text: a.nome
         }));
 
-        const cavalosResponse = await fetch("https://localhost:7052/api/Cavalo");
+        const cavalosResponse = await fetch("https://corrida-hasv.onrender.com/api/Cavalo");
         const cavalosData = await cavalosResponse.json();
         this.fields.find(f => f.id === "cavaloId").options = cavalosData.map(c => ({
           value: c.id,
           text: c.nome
         }));
 
-        const campeonatosResponse = await fetch("https://localhost:7052/Campeonato");
+        const campeonatosResponse = await fetch("https://corrida-hasv.onrender.com/Campeonato");
         const campeonatosData = await campeonatosResponse.json();
         this.fields.find(f => f.id === "campeonatoId").options = campeonatosData.map(c => ({
           value: c.id,
