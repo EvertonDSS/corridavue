@@ -10,6 +10,7 @@
 
 <script>
 import DynamicForm from '@/components/form/DynamicForm.vue';
+import axios from 'axios';
 export default {
   name: 'ApostaPage',
   components: {
@@ -57,7 +58,6 @@ export default {
   methods: {
     async loadOptions() {
       try {
-        // Exemplo de chamada API para apostadores
         const apostadoresResponse = await fetch("https://localhost:7052/api/Apostador");
         const apostadoresData = await apostadoresResponse.json();
         this.fields.find(f => f.id === "apostadorId").options = apostadoresData.map(a => ({
@@ -86,18 +86,13 @@ export default {
       try {
         console.log(data);
 
-        const response = await fetch("https://localhost:7052/api/Aposta", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        });
-        if (!response.ok) {
-          throw new Error("Erro ao salvar aposta");
-        }
+        const response = await axios.post("https://corrida-hasv.onrender.com/api/Aposta", data);
+
+        console.log("Aposta salva com sucesso:", response.data);
+
       } catch (err) {
-        alert("Erro ao salvar aposta")
+        alert("Erro ao salvar aposta");
+        console.error("Erro ao salvar aposta:", err);
       }
     }
   }

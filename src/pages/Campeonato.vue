@@ -7,6 +7,7 @@
 
 <script>
 import DynamicForm from '@/components/form/DynamicForm.vue';
+import axios from 'axios';
 
 export default {
     name: 'CampeonatoPage',
@@ -26,16 +27,18 @@ export default {
 
     },
     methods: {
-        saveForm: async (data) => {
+         saveForm: async (data) => {
             try {
                 console.log(data);
 
+                const response = await axios.post("https://corrida-hasv.onrender.com/Campeonato", data);
+
+                console.log("Campeonato salvo com sucesso:", response.data);
+
             } catch (err) {
-                alert("Erro ao salvar usuário")
+                console.error("Erro ao salvar campeonato:", err);
             }
-
         }
-
     }
-}   
+}
 </script>
